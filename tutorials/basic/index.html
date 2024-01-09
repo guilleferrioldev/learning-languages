@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <meta name=robots content="index, follow">
+    <meta name=theme-color content="#09f">
+    <meta name="description" content="Portafolio de Guille">
+
+    <!--OPEN GRAPH-->
+    <meta property="og:title" content="Portafolio de Guille">
+    <meta property="og:description" content="La pagina mas cool de internet">
+    <meta property="og:image" content="robot-7907756.jpg">
+    <meta property="og:image:alt" content="Un robot programando">
+
+    <!--SEO-->
+    <link rel="alternate" href="https://guille.com" hreflang="en-GB">
+    <link rel="canonical" href="index.html">
+
+    <style>
+        h1 {
+            color: #09f;
+            border-width: 3px;
+            border-style: solid;
+            border-color: currentColor;
+        }
+
+        body {
+            background: hsla(185, 41%, 60%, 0.588);
+        }
+
+        .link{
+            color: red
+        }
+
+        .link:hover{
+            color: yellow;
+            outline: 1px solid yellow; 
+        }
+
+        .link:active{
+            outline: 10px solid red;
+        }
+
+        #show{
+            background: #09f;
+        }
+
+        .description{
+            border: 1px solid red;
+        }
+    </style>
+
+    <title>Porafolio de Guille</title>
+</head>
+<body>
+    <!--Inicio, experiencia-->
+    <header>
+        <h1>Portafolio de Guille</h1>
+
+        <nav>
+            <a class= "link" href="#experiencia">Experiencia</a>
+            <a class= "link" href="#proyectos">Proyectos</a>
+            <a class= "link" href="https://github.com"
+               target="_blank" rel="noreferrer">Github</a>
+        </nav>
+    </header>
+    
+    <main>
+        <p class = "description">+1 año de experiencia como <strong>ingeniero de software</strong>.
+            Especializado en data science </p>
+        
+        <h2 id="experiencia">Experiencia</h2>
+        <ul>
+            <li class="list-item">Trabajo 1</li>
+            <li class="list-item">Trabajo 2</li>
+            <li class="list-item">Trabajo 3</li>
+        </ul>
+
+        <!--image robot-->
+        <a download href="robot-7907756.jpg">
+            <img title="Foto de un robot" src="robot-7907756.jpg" width=500 
+                 alt="Una imagen de un robot" id=photo-image>
+        </a>
+
+        <!--Proyectos  realizados-->
+        <h2 id="proyectos">Proyecto realizados</h2>
+
+        <aside>
+            <header>
+                <h3>Mis tecnologias favoritas</h3>
+            </header>
+            <ol type="1" reversed start="10">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li value="5">Javascript</li>
+                <li>Python</li>
+            </ol>
+        </aside>
+
+        <button id = "show">
+            Haz click aquí
+        </button>
+
+        <section>
+            <article>
+                <header>
+                    <h4>Sitio web corporativo</h4>
+                </header>
+                <p>
+                    Desarrollo de un sitio web corporativo con una interfaz
+                    amigable y moderna.
+                </p>
+                <footer>
+                    <small>Tecnologias aplicadas: HTML, CSS, JS</small>
+                </footer>
+            </article>
+
+            <article>
+                <header>
+                    <h4>Aplicacion web de E-commerce</h4>
+                </header>
+                <p>
+                    Desarrollo de una aplicacion movil para rastrear actividades
+                    físicas y habitos de alimentacion.
+                </p>
+                <footer>            
+                    <small>Tecnologias aplicadas: HTML, CSS, JS</small>
+                </footer>
+            </article>
+
+        <section>
+            <h2>Preguntas frecuentes</h2>
+
+            <details>
+                <summary>¿Qué estudios tiene?</summary>
+                <p>
+                    Estudie en la Cujae durante 3 años y luego en la UH
+                </p>
+            </details>
+
+            <details>
+                <summary>¿Cuáles son mis hobbies?</summary>
+                <p>
+                    Programar, jugar basket, ver futbo y estudiar economia
+                </p>
+            </details>
+
+            <details open>
+                <summary>¿Cuales son mis lenguajes favoritos?</summary>
+                <p>
+                    Mojo(Python), Rust y Typescript(Javascript)
+                </p>
+            </details>
+        </section>
+
+        <!--Formulario-->
+        <section>
+            <h2>Formulario de contactos</h2>
+            
+            <!--Informacion personal-->
+            <form method="post" action="/">
+                <fieldset>
+                    <legend>Informacion personal</legend>
+                    <div>
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" placeholder="Guille Ferriol" required>
+                    </div>
+                    
+                    <div>
+                        <label>Email
+                            <input type="email" name="email" placeholder="email00@gmail.com">
+                        </label>
+                    </div>
+                </fieldset>
+
+                <!--Informacion adicional-->
+                <fieldset>
+                    <legend>Informacion adicional</legend>
+                    <label style="display: block;">Teléfono
+                        <input type="tel" name="telephone" placeholder="Tu teléfono" pattern="[0-9]{9}" required>
+                    </label>
+
+                    <label>Fecha
+                        <input type="date" name="fecha">
+                    </label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Otros</legend>
+                    
+                    <label for="why">¿Por que quieres contactar?</label>
+                    <div> 
+                        <select name="why" id="why">
+                            <option value="1">Trabajo</option>
+                            <option value="2">Duda</option>
+                            <option value="3">Más información</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="terms">¿Aceptas los términos?</label>
+                        <input type="checkbox" name="terms" id="terms" required>
+                    </div>
+
+                    <div> 
+                        <datalist id="languages">
+                            <option value="Typescript">Typescript</option>
+                            <option value="Python">Python</option>
+                            <option value="Mojo">Mojo</option>
+                            <option value="Rust">Rust</option>
+                        </datalist>
+                        <label>¿Con qué languaje quieres que te ayude?
+                            <input list="languages" name="languages">
+                        </label>
+                    </div>
+                </fieldset>
+
+                <button>Enviar contacto</button> <!--Dentro de un form los botones son de tipo submit excepto...-->
+                <button type="button">Este botón no hace nada</button>
+            </form>
+
+        </section>
+    </main>
+
+    <footer>
+        <h5>Copyright @2023 - Guille Ferriol</h5>
+
+        <a href="mailto:emaill00@gmail.com">Enviar email</a>
+        <a href="cel:+123151235651">LLámame</a>
+        <a href="whatsapp://send?text=Hello%20World">Whatsapp</a>
+    </footer>
+
+</body>
+</html>
