@@ -1,0 +1,39 @@
+h1 {
+    color: #09f;
+    border-width: 3px;
+    border-style: solid;
+    border-color: currentColor;
+}
+
+body {
+    background: hsla(185, 41%, 60%, 0.588);
+}
+
+.link{
+    color: red
+}
+
+.link:hover{
+    color: yellow;
+    outline: 1px solid yellow; 
+}
+
+.link:active{
+    outline: 10px solid red;
+}
+
+#show{
+    background: #09f;
+}
+
+.description .bold{
+    border: 1px solid red;
+}
+
+li:first-child{
+    color: red;
+}
+
+li:last-child{
+    color: blue;
+}
