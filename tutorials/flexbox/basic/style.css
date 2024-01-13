@@ -1,0 +1,41 @@
+body{
+  background: #999;
+}
+
+.parent{
+  display: flex;
+  flex-direction: row;
+  direction: ltr;
+  flex-wrap: nowrap;
+  border: 4px solid #000;
+  width: 300px;
+}
+
+.item{
+  border: 1px solid;
+  opacity: .9;
+  height: 200px;
+  background: #09f; 
+  /* flex: 1 */
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.item:first-child{
+  background: yellow;
+  flex: 4;
+  order: 3;
+}
+
+.item:nth-child(2){
+  background: #09f;
+  flex: 2;
+  order: 1;
+}
+
+.item:last-child{
+  background: red;
+  flex: 1;
+  order: 2;
+}
