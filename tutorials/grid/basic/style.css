@@ -1,0 +1,30 @@
+body{
+  background: #ddd;
+}
+
+.container{
+  background: lightsalmon;
+  border: 3px solid black;
+  border-radius: 10px;
+  display: grid;
+  grid-template: repeat(3, minmax(100px, 1fr)) / repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+}
+
+.container div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: lightblue;
+  border: 2px solid #09f;
+  border-radius: 6px;
+}
+
+.container div:first-child,
+.container div:nth-child(5){
+  background: lightgreen;
+  grid-row: span 2 ;
+  border: 2px solid green;
+}
+

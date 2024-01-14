@@ -1,0 +1,38 @@
+body{
+  background: #ddd;
+}
+
+.container{
+  background: lightsalmon;
+  border: 3px solid black;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  grid-auto-rows: 50px;
+  gap: 4px;
+  padding: 4px;
+  height: 300px;
+  width: 300px;
+  place-content: center;
+}
+
+.container div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: lightblue;
+  border: 2px solid #09f;
+  border-radius: 6px;
+}
+
+.container div:first-child{
+  background: lightgreen;
+  border: 2px solid green;
+  z-index: 1;
+}
+
+.container div:nth-child(2){
+  background: lightseagreen;
+  border: 2px solid purple;
+}
+
