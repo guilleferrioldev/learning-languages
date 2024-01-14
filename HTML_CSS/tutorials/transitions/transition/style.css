@@ -1,0 +1,36 @@
+body{
+  display: grid;
+  place-content: center;
+  min-height: 50vh;
+}
+
+.pulser{
+  width: 50px;
+  height: 50px;
+  background: #09f;
+  border-radius: 50%;
+  position: relative;
+  transition: background 300ms linear 200ms, 
+              scale 500ms ease-in-out 100ms,
+              box-shadow 200ms ease-in ;  /* final state */          
+}
+
+.pulser:hover{
+  scale: 2;
+  background: purple;
+  box-shadow: 0 0 10px purple;
+  transition-duration: 1s; /* initial state */
+}
+
+@media (prefers-reduced-motion: reduce){
+  .pulser{
+    transition: none;
+  }
+}
+
+
+
+
+
+
+

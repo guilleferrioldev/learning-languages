@@ -1,0 +1,52 @@
+body{
+  display: grid;
+  place-content: center;
+  min-height: 50vh;
+}
+
+.pulser{
+  width: 50px;
+  height: 50px;
+  background: #09f;
+  border-radius: 50%;
+  position: relative;
+  transition-duration: 1s; 
+   transition-property: all;
+  transition-timing-function: cubic-bezier(0.68,-0.55,0.27,1.55); /* https://easings.co/ */
+  opacity: 0;
+}
+
+section {
+  display: flex;
+  gap: 16px;
+  align-content: center;
+  align-items: center;
+}
+
+section:hover .pulser{
+  opacity: 1;
+} 
+
+.pulser:hover{
+  scale: 2;
+  background: purple;
+  box-shadow: 0 0 10px purple;
+}
+
+.pulser:first-child {
+  transition-delay: 0ms;
+}
+
+.pulser:nth-child(2) {
+  transition-delay: 500ms;
+}
+
+.pulser:nth-child(3) {
+  transition-delay: 1s;
+}
+
+
+
+
+
+
