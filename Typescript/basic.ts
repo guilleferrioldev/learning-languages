@@ -6,6 +6,10 @@ const c = a + b
 
 let text = "Yeah"
 
+let an: number | string 
+an = 5
+an = "si"
+
 const person = {
     name: "Pepe", 
     age: 30
