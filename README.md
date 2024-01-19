@@ -3,7 +3,7 @@ My journey learning different languages.
 
 ### Recomended sites
 #### HTML and CSS
-- [100DaysCss Link](https://100dayscss.com/)
+- [100DaysCss](https://100dayscss.com/)
 - [Flexbox Froggy](https://flexboxfroggy.com/)
 - [Grid Garden](https://cssgridgarden.com/)
 
