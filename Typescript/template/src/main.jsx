@@ -1,11 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(
-    <React.Fragment>
-        <button>Hello World</button>
-        <button>Yeah</button>
-    </React.Fragment>
-);
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)
