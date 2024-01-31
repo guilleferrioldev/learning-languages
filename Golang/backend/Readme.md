@@ -1,0 +1,4 @@
+Execute:
+```
+go run .
+```
