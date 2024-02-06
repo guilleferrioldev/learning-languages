@@ -7,6 +7,7 @@ import (
 	"react-go-crud/router"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 )
 
@@ -38,6 +39,10 @@ func main() {
 	defer sqlDb.Close()
 
 	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 	router.SetupRoutes(app)
 	app.Listen(":8000")
 }

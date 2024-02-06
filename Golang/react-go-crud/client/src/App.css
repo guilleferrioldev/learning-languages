@@ -1,0 +1,9 @@
+.box {
+    border: solid 1px #000;
+    margin: 5px;
+    padding: 10px
+}
+
+.box .title {
+    font-weight: 800;
+}

@@ -10,7 +10,9 @@ import (
 
 // Blog List
 func BlogList(c *fiber.Ctx) error {
-	var context = fiber.Map{}
+
+	var context = fiber.Map{"statusText": "OK",
+		"message": "Blog List"}
 	var records []model.Blog
 
 	db := database.DBConn
@@ -22,7 +24,7 @@ func BlogList(c *fiber.Ctx) error {
 
 // Add Blog into database
 func BlogCreate(c *fiber.Ctx) error {
-	var context = fiber.Map{"statusText": "Ok",
+	var context = fiber.Map{"statusText": "OK",
 		"message": "Add a Blog"}
 
 	record := new(model.Blog)
@@ -102,7 +104,7 @@ func BlogDelete(c *fiber.Ctx) error {
 		return c.JSON(context)
 	}
 
-	context["statusText"] = "Ok"
+	context["statusText"] = "OK"
 	context["message"] = "Record delete successfully"
 	return c.Status(200).JSON(context)
 }
