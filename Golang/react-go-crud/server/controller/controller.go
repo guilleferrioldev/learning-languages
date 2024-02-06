@@ -4,6 +4,7 @@ import (
 	"log"
 	"react-go-crud/database"
 	"react-go-crud/model"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -15,10 +16,35 @@ func BlogList(c *fiber.Ctx) error {
 		"message": "Blog List"}
 	var records []model.Blog
 
+	time.Sleep(time.Millisecond * 100)
+
 	db := database.DBConn
 	db.Find(&records)
 	context["blog_records"] = records
 
+	return c.Status(200).JSON(context)
+}
+
+// Blog detail page
+func BlogDetail(c *fiber.Ctx) error {
+	c.Status(400)
+	context := fiber.Map{"statusText": "",
+		"message": ""}
+
+	id := c.Params("id")
+	var record model.Blog
+
+	database.DBConn.First(&record, id)
+
+	if record.ID == 0 {
+		log.Println("Record not Found")
+		context["message"] = "Record not Found"
+		return c.Status(404).JSON(context)
+	}
+
+	context["record"] = record
+	context["statusText"] = "OK"
+	context["message"] = "Blog Detail"
 	return c.Status(200).JSON(context)
 }
 

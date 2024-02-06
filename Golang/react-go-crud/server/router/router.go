@@ -11,6 +11,9 @@ func SetupRoutes(app *fiber.App) {
 	// list => get
 	app.Get("/", controller.BlogList)
 
+	//read blog => get (id)
+	app.Get("/:id", controller.BlogDetail)
+
 	// add => post
 	app.Post("/", controller.BlogCreate)
 
