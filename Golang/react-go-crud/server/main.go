@@ -39,6 +39,9 @@ func main() {
 	defer sqlDb.Close()
 
 	app := fiber.New()
+
+	app.Static("/static", "./static")
+
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 		AllowHeaders: "Origin, Content-Type, Accept",

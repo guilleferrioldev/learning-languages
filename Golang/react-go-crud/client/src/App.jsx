@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Blog from './pages/Blog'
 import Add from "./pages/Add";
 import Edit from "./pages/Edit";
+import Delete from "./pages/Delete";
 
 function App () {
   return (
@@ -16,6 +17,7 @@ function App () {
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<Blog />} />
         <Route path="/edit/:id" element={<Edit />} />
+        <Route path="/delete/:id" element={<Delete />} />
         <Route path="/add" element={<Add />} />
       </Routes>
       <Footer />

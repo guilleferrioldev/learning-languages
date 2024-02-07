@@ -2,6 +2,7 @@ package controller
 
 import (
 	"log"
+	"os"
 	"react-go-crud/database"
 	"react-go-crud/model"
 	"time"
@@ -55,16 +56,35 @@ func BlogCreate(c *fiber.Ctx) error {
 
 	record := new(model.Blog)
 
-	if err := c.BodyParser(&record); err != nil {
+	if err := c.BodyParser(record); err != nil {
 		log.Println("Error in parsing request")
 		context["statusText"] = ""
 		context["message"] = "Something went wrong"
 	}
 
+	// File upload
+	file, err := c.FormFile("file")
+
+	if err != nil {
+		log.Println("Error in file upload", err)
+	}
+
+	if file.Size > 0 {
+		filename := "./static/uploads/" + file.Filename
+		c.SaveFile(file, filename)
+
+		if err := c.SaveFile(file, filename); err != nil {
+			log.Println("Error in fole uploading...", err)
+		}
+
+		// Set image path to the struct
+		record.Image = filename
+	}
+
 	result := database.DBConn.Create(record)
 
 	if result.Error != nil {
-		log.Panicln("Error in saving data")
+		log.Println("Error in saving data")
 	}
 
 	context["message"] = "Record is saved successfully"
@@ -121,6 +141,15 @@ func BlogDelete(c *fiber.Ctx) error {
 		log.Println("Record not Found")
 		context["message"] = "Record not Found"
 		return c.JSON(context)
+	}
+
+	// Remove image
+	filename := record.Image
+
+	err := os.Remove(filename)
+
+	if err != nil {
+		log.Println("Error in deleting file", err)
 	}
 
 	result := database.DBConn.Delete(record)
