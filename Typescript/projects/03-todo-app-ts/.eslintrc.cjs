@@ -1,13 +1,13 @@
 module.exports = {
-    "env": {
+    env: {
         "browser": true,
         "es2021": true
     },
-    "extends": [
+    extends: [
         "standard-with-typescript",
         "plugin:react/recommended"
     ],
-    "overrides": [
+    overrides: [
         {
             "env": {
                 "node": true
@@ -20,15 +20,17 @@ module.exports = {
             }
         }
     ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project" : "./tsconfig.json"
+    parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        project : "./tsconfig.json"
     },
-    "plugins": [
+    plugins: [
         "react"
     ],
-    "rules": {
-        "react/react-in-jsx-jcope": "off",
+    rules: {
+        'react-prop-types': 'off',
+        'react/react-in-jsx-jcope': "off",
+        '@typescript-eslint/non-nullable-type-assertion-style': off,
     }
 }
