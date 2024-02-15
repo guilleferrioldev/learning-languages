@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', 'Courier', sans-serif;
+    color: white;
+}
+
+body {
+    height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+.container {
+    position: relative;
+    height: 400px;
+    min-width: 400px;
+    background: linear-gradient(58deg, rgba(67,63,161,1) 0%, rgba(71,125,178,1) 50%, rgba(78,192,201,1) 100%); 
+    border-radius: 20px;
+    box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.hundred {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 5px;
+    left: 10px;
+}
+
+.one {
+    height: 65%;
+    width: 10%;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    left: 5%;
+    top: 20%;
+    z-index: 2;
+    filter: drop-shadow(1px 1px 9px #0000002f)
+}
+
+
+.ond-detail {
+    position: absolute;
+    height: 30%;
+    width: 8%;
+    background-color: white;
+    border-radius: 5px;
+    transform: rotate(50deg);
+    left: 10%;
+    top: 36.8%;
+}
+
+.first-cero {
+    top: 20%;
+    width: 35%;
+    height: 65%;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: -3%;
+    filter: drop-shadow(1px 1px 9px #0000002f);
+    z-index: 1;
+}
+
+.first-cero::after {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background: linear-gradient(58deg, rgba(67,63,161,1) 0%, rgba(71,125,178,1) 50%, rgba(78,192,201,1) 100%); 
+}
+
+.second-cero {
+    top: 20%;
+    width: 35%;
+    height: 65%;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: -3%;
+    filter: drop-shadow(1px 1px 9px #0000002f);
+    z-index: 2;
+}
+
+.second-cero::after {
+    content:"";
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background: linear-gradient(58deg, rgba(67,63,161,1) 0%, rgba(71,125,178,1) 50%, rgba(78,192,201,1) 100%); 
+}
+
+.info{
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2%;
+    padding: 3%;
+    gap: 3%;
+}
+
+.info h1{
+    font-size: 6rem;
+    line-height: 70%;
+}
+
+.info p{
+    font-size: 2rem;
+    font-weight: bold; 
+}
