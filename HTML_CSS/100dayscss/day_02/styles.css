@@ -1,0 +1,147 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body{
+    height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+.container {
+    height: 400px;
+    min-width: 400px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.3);
+    background-color: #3faf82;
+    display: grid;
+    place-content: center;
+}
+
+.menu{
+    aspect-ratio: 1/1;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    gap: 12%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+span{
+    height: 10%;
+    width: 100%;
+    background-color: white;
+    border-radius: 6px;
+    filter: drop-shadow(1px 1px 10px #0000004f);
+    transition: 400ms ease-in-out;
+}
+
+/* reverse */
+
+.line-3 {
+    animation: buttomRev 700ms ease-in-out backwards;
+}
+
+@keyframes buttomRev {
+    0% {
+         transform: translateY(-225%) rotate(135deg);
+        }
+
+    50% {
+          transform: translateY(-225%) ;
+        }
+
+    100%{
+        transform: translateY(0%);
+        }
+}
+
+.line-2{
+    animation: centroRev 700ms ease-in-out forwards;
+}
+
+@keyframes centroRev {
+    0%,50% {
+        scale: 0;
+      }
+      
+      100% {
+        scale: 1;
+    }
+    }
+
+
+.line-1{
+    animation: topRev 700ms ease-in-out backwards;
+}
+
+@keyframes topRev {
+    0% {
+         transform: translateY(225%) rotate(45deg);
+        }
+
+    50% {
+          transform: translateY(225%) ;
+        }
+
+    100%{
+        transform: translateY(0%);
+        }
+}
+
+/* reverse */
+
+.top{
+    animation: top 700ms ease-in-out forwards;
+}
+
+@keyframes top {
+    0% {
+        transform: rotate(0deg);
+      }
+
+    50% {
+        transform: translateY(225%);
+    }
+
+    100%{
+        transform: translateY(225%) rotate(45deg);
+    }
+}
+
+.centro{
+        animation: centro 700ms ease-in-out forwards;
+}
+
+@keyframes centro {
+    0% {
+        scale: 1;
+        }
+    
+    50%, 100% {
+        scale: 0;
+    }
+}
+
+
+.buttom{ 
+    animation: buttom 700ms ease-in-out forwards;
+}
+    
+@keyframes buttom {
+    0% {
+            transform: rotate(0deg);
+        }
+
+    50% {
+            transform: translateY(-225%);
+        }
+
+    100%{
+            transform: translateY(-225%) rotate(135deg);
+        }
+}
