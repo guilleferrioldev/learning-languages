@@ -9,6 +9,9 @@ function App() {
   const [sorting, setSorting] = useState<SortBy>(SortBy.NONE)
   const originalUsers = useRef<User[]>([])
   const [filterCountry, setFilterCountry] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)  
+  const [error, setError] = useState(false) 
+  const [currentPage, setCurrentPage] = useState(1)
 
   const toggleColors = () => {
     setShowColors(!showColors)
@@ -33,17 +36,25 @@ function App() {
   }
 
   useEffect (() => {
-    fetch("https://randomuser.me/api/?results=100")
-      .then(async res => await res.json())
-      .then(res => {
-        setUsers(res.results)
-        originalUsers.current = res.results
+    setLoading(true)
+    setError(false)
 
+    fetch(`https://randomuser.me/api/?results=10&seed=guilleferrioldev&page=${currentPage}`)
+      .then(async res => {
+        if (!res.ok) throw new Error("Error fetching")
+        return await res.json()})
+      .then(res => {
+        setUsers(prevUsers => prevUsers.concat(res.results))
+        originalUsers.current = res.results
       })
       .catch(err => {
         console.error(err)
+        setError(true)
       })
-  }, [])
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [currentPage])
 
   const filteredUsers =  useMemo(() => {
     return  filterCountry != null && filterCountry.length > 0
@@ -85,10 +96,18 @@ const sortedUsers = useMemo(() => {
             setFilterCountry(e.target.value)} />
       </header>
       <main>
+        {users.length > 0 &&
         <ListOfUsers changeSorting={handleChangeSort}
                      deleteUser={handleDelete} 
                      showColors={showColors}
-                     users={sortedUsers} />
+                     users={sortedUsers} />}
+        {loading && <strong>Loading</strong>}
+        {!loading && error && <p>An error was ocurred</p>}
+        {!loading && !error && users.length === 0 && <p>There are no users</p>}
+        {!loading && !error && users.length > 0 &&
+       <button onClick={() => setCurrentPage(currentPage + 1)}>
+          More results
+      </button> }
       </main>
       
     </div>
