@@ -1,17 +1,43 @@
-import { useEffect, useState , useRef, useMemo} from 'react'
+import { useState, useMemo} from 'react'
 import "./App.css"
 import { type User, SortBy } from './types.d'
 import { ListOfUsers } from './components/ListOfUsers'
+import { useInfiniteQuery} from '@tanstack/react-query'
+
+const LIMIT = 10;
+
+async function fetchUsers ({pageParam }: {pageParam: number}): Promise<{
+  users: User[];
+  currentPage: number;
+  nextPage: number | null
+}> {
+  return await  fetch(`https://randomuser.me/api/?results=10&seed=guilleferrioldev&page=${pageParam}`)
+  .then(async res => {
+    if (!res.ok) throw new Error("Error fetching")
+    return await res.json()})
+  .then(res => {
+    const currentPage = Number(res.info.page)
+    return {
+      users: res.results,
+      currentPage: currentPage,
+      nextPage: currentPage + 1 < LIMIT ? currentPage + 1 : null,
+    }
+  })
+}
 
 function App() {
-  const [users, setUsers] = useState<User[]>([])
+  const { data, status, error, refetch, fetchNextPage, hasNextPage} = useInfiniteQuery({
+    queryKey: ['users'],
+    queryFn: fetchUsers,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+  })
+
+  const users: User[] = data?.pages?.flatMap(page => page.users) ?? []
+  
   const [showColors, setShowColors] = useState(false)
   const [sorting, setSorting] = useState<SortBy>(SortBy.NONE)
-  const originalUsers = useRef<User[]>([])
   const [filterCountry, setFilterCountry] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)  
-  const [error, setError] = useState(false) 
-  const [currentPage, setCurrentPage] = useState(1)
 
   const toggleColors = () => {
     setShowColors(!showColors)
@@ -23,42 +49,21 @@ function App() {
   }
 
   const handleDelete = (email: string) => {
-    const filteredUsers = users.filter((user) => user.email !== email)
-    setUsers(filteredUsers)
+   // const filteredUsers = users.filter((user) => user.email !== email)
+   // setUsers(filteredUsers)
   }
 
   const handleReset = () => {
-    setUsers(originalUsers.current)
+    refetch()
   }
 
   const handleChangeSort = (sort: SortBy) => {
     setSorting(sort)
   }
 
-  useEffect (() => {
-    setLoading(true)
-    setError(false)
-
-    fetch(`https://randomuser.me/api/?results=10&seed=guilleferrioldev&page=${currentPage}`)
-      .then(async res => {
-        if (!res.ok) throw new Error("Error fetching")
-        return await res.json()})
-      .then(res => {
-        setUsers(prevUsers => prevUsers.concat(res.results))
-        originalUsers.current = res.results
-      })
-      .catch(err => {
-        console.error(err)
-        setError(true)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [currentPage])
-
   const filteredUsers =  useMemo(() => {
     return  filterCountry != null && filterCountry.length > 0
-      ? users.filter(user => {
+      ? users?.filter(user => {
       return user.location.country.toLowerCase().includes(filterCountry.toLocaleLowerCase())
   })
   : users
@@ -73,7 +78,7 @@ const sortedUsers = useMemo(() => {
     [SortBy.LAST]: user => user.name.last
   }
 
-  return filteredUsers.toSorted((a, b) => {
+  return filteredUsers?.toSorted((a, b) => {
     const extractProperty = compareProperties[sorting]
     return extractProperty(a).localeCompare(extractProperty(b))
   })
@@ -101,13 +106,14 @@ const sortedUsers = useMemo(() => {
                      deleteUser={handleDelete} 
                      showColors={showColors}
                      users={sortedUsers} />}
-        {loading && <strong>Loading</strong>}
-        {!loading && error && <p>An error was ocurred</p>}
-        {!loading && !error && users.length === 0 && <p>There are no users</p>}
-        {!loading && !error && users.length > 0 &&
-       <button onClick={() => setCurrentPage(currentPage + 1)}>
+        {status === 'pending' && <strong>Loading</strong>}
+        {status === 'error' && error && <p>An error was ocurred</p>}
+        {status === 'success' && !error && users.length === 0 && <p>There are no users</p>}
+        {status === 'success' && !error && hasNextPage === true && users.length > 0 &&
+        <button onClick={() => fetchNextPage()}>
           More results
-      </button> }
+        </button> }
+        {status === 'success' && !error && hasNextPage === false && users.length > 0 && <p>There is no more results</p>}
       </main>
       
     </div>
