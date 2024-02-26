@@ -1,3 +1,5 @@
+import NavLinks from '@/app/ui/dashboard/nav-links';
+
 export default function DashboardLayout({
     children,
 }: Readonly<{
@@ -5,7 +7,7 @@ export default function DashboardLayout({
 }>): JSX.Element {
     return (
         <section>
-            Esto es el layout del dahsboard
+            <NavLinks />
             {children}
         </section>
     )

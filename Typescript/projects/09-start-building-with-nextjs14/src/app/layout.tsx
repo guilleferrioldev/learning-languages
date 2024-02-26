@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { montserrat } from "./fonts";
-import NavLinks  from './nav-links'
+import '@/app/ui/global.css';
+import {  montserrat } from '@/app/ui/fonts';
 
 export const metadata: Metadata = {
   title: "Learning Next",
@@ -10,15 +9,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>): JSX.Element {
+}) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
-        <NavLinks />
-        {children} 
-      </body>
+      <body className={`${montserrat.className} antialiased`}>
+        {children}
+        <footer className='py-10 flex justify-center items-center'>
+          Hecho con 🧡 por la gente de Vercel
+          </footer>
+        </body>    
     </html>
   );
 }
