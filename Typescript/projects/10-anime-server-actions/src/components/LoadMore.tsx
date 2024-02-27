@@ -15,7 +15,7 @@ export default function LoadMore() {
 
   useEffect(() => {
     if (inView) {
-      fetchAnime(page.current, 8)
+      fetchAnime(page.current)
         .then((res)=> {
           setData([...data, ...res]);
           page.current++;
