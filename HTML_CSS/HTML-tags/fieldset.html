@@ -1,0 +1,33 @@
+<!--Is used to group several controls within a web form.-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Fieldset</title>
+    </head>
+    <body>
+        <form>
+            <fieldset>
+                <legend>Favorites</legend>
+                
+                <div>
+                    <label>Color</label>
+                </div>
+                
+                <div>
+                    <input list="color-list" type="text" />
+                    <datalist id="color-list">
+                        <option value="Red"></option>
+                        <option value="Blue"></option>
+                        <option value="Green"></option>
+                    </datalist>
+                </div>
+            
+            </fieldset>
+        </form>
+    </body>
+</html>
+
+
+<label for="fuel">Fuel level:</label>
+
+<meter id="fuel" min="0" max="100" low="33" high="66" optimum="80" value="50">at 50/100</meter>
