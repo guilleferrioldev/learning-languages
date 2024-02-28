@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', 'Courier', sans-serif;
+    color: white;
+}
+
+body {
+    height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+.container {
+    position: relative;
+    height: 400px;
+    min-width: 400px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.3);
+    background: #06181f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heart {
+    position: absolute;
+    width: 200px;
+}
+
+.heart path {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: #31e8ff;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+}
+
+.heart path:hover {
+    animation: animate-heart 0.5s linear forwards;
+}
+
+@keyframes animate-heart {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    60% {
+        stroke-dashoffset: 80;
+        fill: transparent;
+    }
+    100% {
+        stroke-dashoffset: 100;
+        fill: #31e8ff;
+    }
+}
+
