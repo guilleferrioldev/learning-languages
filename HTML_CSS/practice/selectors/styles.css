@@ -1,0 +1,38 @@
+/*Combinig selectors*/
+div.red.green-text {
+    background: red;
+    color: green;
+}
+
+/*Direct child*/
+span > b {
+    background: blue;
+}
+
+/*Sibling selector every li after li.second-li*/
+[second-li] ~ li {
+    background: green;
+}
+
+/*Sibling selector for the next li after the li.first-li*/
+li.first-li + li {
+    background: yellow;
+}
+
+/* Pseudo classes */
+span:first-of-type{
+    background-color: rgb(31, 92, 92);
+}
+
+li:first-child{
+    background: blue;
+}
+
+li:last-child:hover{
+    background-color: red;
+    color: blue;
+}
+
+input:checked{
+    margin: 50px;
+}
