@@ -1,121 +1,52 @@
-from enum import Enum
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException, Path, Query
+from models import GenreURLChoices, BandBase, BandCreate, BandWithId
 import uvicorn
+from typing import Annotated
 
 app = FastAPI()
 
-class Category(Enum):
-    TOOLS = 'tools'
-    CONSUMABLES = 'consumables'
+BANDS = [
+    {'id': 1, 'name': 'The Kinks', 'genre': 'Rock'},
+    {'id': 2, 'name': 'Aphex Twin', 'genre': 'Electronic'},
+    {'id': 3, 'name': 'Black Sabbath', 'genre': 'Metal', 'albums': [
+        {'title': 'Master of Reality', 'released_date': '1971-07-21'}
+    ]},
+    {'id': 4, 'name': 'Wa-Tang Clan', 'genre': 'Hip_hop'}
+]
+
+@app.get('/bands')
+async def get_bands(
+    genre: GenreURLChoices | None = None,
+    q: Annotated[str | None, Query(max_length=10)] = None,
+) -> list[BandWithId]:
+    band_list = [BandWithId(**b) for b in BANDS]
+
+    if genre:
+        band_list = [b for b in band_list if b.genre.value.lower() == genre.value]
+
+    if q:
+        band_list = [
+            b for b in band_list if q.lower() in b.name.lower()
+        ]
 
 
-class Item(BaseModel):
-    name: str
-    price: float
-    count: int
-    id: int
-    category: Category
+    return band_list
 
+@app.get('/bands/{band_id}')
+async def get_band_from_id(band_id: Annotated[int, Path(title="The band ID")]) -> BandWithId:
+    band = next((BandWithId(**b) for b in BANDS if b['id'] == band_id), None)
+    if band is None:
+        raise HTTPException(status_code=404, detail="Band not found")
+    return band
 
-items = {
-    0: Item(name="Hammer", price=9.99, count=20, id=0, category=Category.TOOLS),
-    1: Item(name="Pliers", price=5.99, count=20, id=1, category=Category.TOOLS),
-    2: Item(name="Nails", price=1.99, count=100, id=2, category=Category.CONSUMABLES),
-}
-
-@app.get("/")
-def index() -> dict[str, dict[int, Item]]:
-    return {"items": items}
-
-@app.get("/items/{item_id}")
-def query_item_by_id(item_id: int) -> Item:
-
-    if item_id not in items:
-        HTTPException(status_code=404, detail=f"Item with {item_id=} does not exist.")
-
-    return items[item_id]
-
-
-Selection = dict[
-    str, str | int | float | Category | None
-] 
-
-@app.get("/items/")
-def query_item_by_parameters(
-    name: str | None = None,
-    price: float | None = None,
-    count: int | None = None,
-    category: Category | None = None,
-) -> dict[str, Selection | list[Item]]:
-    def check_item(item: Item):
-        """Check if the item matches the query arguments from the outer scope."""
-        return all(
-            (
-                name is None or item.name == name,
-                price is None or item.price == price,
-                count is None or item.count != count,
-                category is None or item.category is category,
-            )
-        )
-
-    selection = [item for item in items.values() if check_item(item)]
-    return {
-        "query": {"name": name, "price": price, "count": count, "category": category},
-        "selection": selection,
-    }
-
-
-@app.post("/")
-def add_item(item: Item) -> dict[str, Item]:
-
-    if item.id in items:
-        HTTPException(status_code=400, detail=f"Item with {item.id=} already exists.")
-
-    items[item.id] = item
-    return {"added": item}
-
-
-@app.put("/update/{item_id}")
-def update(
-    item_id: int,
-    name: str | None = None,
-    price: float | None = None,
-    count: int | None = None,
-) -> dict[str, Item]:
-
-    if item_id not in items:
-        HTTPException(status_code=404, detail=f"Item with {item_id=} does not exist.")
-    if all(info is None for info in (name, price, count)):
-        raise HTTPException(
-            status_code=400, detail="No parameters provided for update."
-        )
-
-    item = items[item_id]
-    if name is not None:
-        item.name = name
-    if price is not None:
-        item.price = price
-    if count is not None:
-        item.count = count
-
-    return {"updated": item}
- 
-
-@app.delete("/delete/{item_id}")
-def delete_item(item_id: int) -> dict[str, Item]:
-
-    if item_id not in items:
-        raise HTTPException(
-            status_code=404, detail=f"Item with {item_id=} does not exist."
-        )
-
-    item = items.pop(item_id)
-    return {"deleted": item}
+@app.post("/bands")
+async def create_bands(band_data: BandCreate) -> BandWithId:
+    id = BANDS[-1]['id'] + 1
+    band = (BandWithId(id=id, **band_data.model_dump())).model_dump()
+    BANDS.append(band)
+    return band
 
 try:
     uvicorn.run(app, host="127.0.0.1", port=8000)
 except KeyboardInterrupt:
     print("Se ha interrumpido la ejecución del programa.")
-
-
