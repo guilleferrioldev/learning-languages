@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -38,6 +39,10 @@ func createServer() {
 	log.Println("NATS server started")
 }
 
+type LogMessage struct {
+	Message string `json:"message"`
+}
+
 func producer(ctx context.Context) {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
@@ -46,7 +51,7 @@ func producer(ctx context.Context) {
 	// close the connection on function exit
 	defer nc.Close()
 
-	// listen for messaages on this subject
+	// listen for messages on this subject
 	subject := "logs"
 
 	i := 0
@@ -58,14 +63,23 @@ func producer(ctx context.Context) {
 			return
 		default:
 			i += 1
-			message := fmt.Sprintf("message %v", i)
+			message := LogMessage{
+				Message: fmt.Sprintf("%v", i),
+			}
 
-			// Publish the message to the nats server
-			err = nc.Publish(subject, []byte(message))
+			// Encode the message to JSON
+			messageJSON, err := json.Marshal(message)
+			if err != nil {
+				log.Println("Failed to marshal message:", err)
+				continue // Skip to the next iteration
+			}
+
+			// Publish the JSON encoded message to the NATS server
+			err = nc.Publish(subject, messageJSON)
 			if err != nil {
 				log.Println("Failed to publish message:", err)
 			} else {
-				log.Println(message)
+				log.Println(string(messageJSON)) // Log the JSON string
 			}
 		}
 	}
