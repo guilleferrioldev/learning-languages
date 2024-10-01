@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "api/proto;api"; 
+
+package api;
+
+message Order {
+  string id = 1;
+  string customerId = 2;
+  string status = 3;
+  repeated Item items = 4;
+}
+
+service OrdersService {
+  rpc CreateOrder(CreateOrderRequest) returns (Order) {}
+}
+
+message Item {
+    string itemId = 1;
+    string name = 2;
+    int32 quantity = 3;
+    string priceId = 4;
+}
+
+message ItemsWithQuantity{
+    string itemId = 1;
+    int32 quantity = 2;
+}
+
+message CreateOrderRequest {
+  string customerId = 1;
+  repeated ItemsWithQuantity items = 2;
+}
