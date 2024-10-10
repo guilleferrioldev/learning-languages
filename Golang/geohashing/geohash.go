@@ -1,5 +1,3 @@
-// Package geohash provides encoding/decoding of base32 geohashes into coordinate pairs.
-// From: https://en.wikipedia.org/wiki/Geohash
 package main
 
 import (
