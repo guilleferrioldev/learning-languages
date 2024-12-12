@@ -25,12 +25,12 @@ final appRouter = GoRouter(
       builder: (context, state) => const UiControlsScreen(),
     ),
     GoRoute(
-      path: '/animated_scroll',
+      path: '/animated',
       name: AnimatedScrollScreen.name,
       builder: (context, state) => const AnimatedScrollScreen(),
     ),
     GoRoute(
-      path: '/app_tutorial',
+      path: '/tutorial',
       name: AppTutorialScreen.name,
       builder: (context, state) => const AppTutorialScreen(),
     ),
@@ -45,7 +45,7 @@ final appRouter = GoRouter(
       builder: (context, state) => const ProgressScreen(),
     ),
     GoRoute(
-      path: '/snackbar',
+      path: '/snackbars',
       name: SnackbarScreen.name,
       builder: (context, state) => const SnackbarScreen(),
     ),
