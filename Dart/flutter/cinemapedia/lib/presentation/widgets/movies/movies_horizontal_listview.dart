@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/config/helpers/helpers.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MoviesHorizontalListview extends StatefulWidget {
   final List<Movie> movies;
@@ -58,8 +59,10 @@ class _MoviesHorizontalListviewState extends State<MoviesHorizontalListview> {
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              return _Slide(
-                movie: widget.movies[index],
+              return FadeInRight(
+                child: _Slide(
+                  movie: widget.movies[index],
+                ),
               );
             },
           ))
@@ -117,7 +120,13 @@ class _Slide extends StatelessWidget {
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 // TODO: Add image loading
-                child: const Center()),
+                child: Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        context.push('/movie/${movie.id}');
+                      },
+                      child: const Text("Tap to see more")),
+                )),
           ),
 
           const SizedBox(height: 5),

@@ -1,4 +1,5 @@
 import 'package:cinemapedia/infrastructure/mappers/movie_mapper.dart';
+import 'package:cinemapedia/infrastructure/models/moviedb/movie_details.dart';
 import 'package:dio/dio.dart';
 
 import 'package:cinemapedia/config/constants/environment.dart';
@@ -25,49 +26,84 @@ class MoviedbDatasource extends MoviesDataSource {
 
   @override
   Future<List<Movie>> getNewPlaying({int page = 1}) async {
-    final response = await _dio.get(
-      "/movie/now_playing",
-      queryParameters: {
-        'page': page,
-      },
-    );
+    try {
+      final response = await _dio.get(
+        "/movie/now_playing",
+        queryParameters: {
+          'page': page,
+        },
+      );
 
-    return _jsonToMovie(response.data);
+      return _jsonToMovie(response.data);
+    } catch (error) {
+      return [];
+    }
   }
 
   @override
   Future<List<Movie>> getPopular({int page = 1}) async {
-    final response = await _dio.get(
-      '/movie/popular',
-      queryParameters: {
-        'language': 'en-US',
-      },
-    );
+    try {
+      final response = await _dio.get(
+        '/movie/popular',
+        queryParameters: {
+          'language': 'en-US',
+        },
+      );
 
-    return _jsonToMovie(response.data);
+      return _jsonToMovie(response.data);
+    } catch (error) {
+      return [];
+    }
   }
 
   @override
   Future<List<Movie>> getTopRated({int page = 1}) async {
-    final response = await _dio.get(
-      '/movie/top_rated',
-      queryParameters: {
-        'language': 'en-US',
-      },
-    );
+    try {
+      final response = await _dio.get(
+        '/movie/top_rated',
+        queryParameters: {
+          'language': 'en-US',
+        },
+      );
 
-    return _jsonToMovie(response.data);
+      return _jsonToMovie(response.data);
+    } catch (error) {
+      return [];
+    }
   }
 
   @override
   Future<List<Movie>> getUpcoming({int page = 1}) async {
-    final response = await _dio.get(
-      '/movie/upcoming',
-      queryParameters: {
-        'language': 'en-US',
-      },
-    );
+    try {
+      final response = await _dio.get(
+        '/movie/upcoming',
+        queryParameters: {
+          'language': 'en-US',
+        },
+      );
 
-    return _jsonToMovie(response.data);
+      return _jsonToMovie(response.data);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  @override
+  Future<Movie> getMovieById(String id) async {
+    try {
+      final response = await _dio.get(
+        "/movie/$id",
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Error getting movie by id');
+      }
+
+      final movieDetails = MovieDetails.fromJson(response.data);
+
+      return MovieMapper.movieFromMovieDetails(movieDetails);
+    } catch (error) {
+      throw Exception('Error getting movie by id');
+    }
   }
 }
