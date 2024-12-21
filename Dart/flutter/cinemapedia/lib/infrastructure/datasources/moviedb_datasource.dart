@@ -46,7 +46,7 @@ class MoviedbDatasource extends MoviesDataSource {
       final response = await _dio.get(
         '/movie/popular',
         queryParameters: {
-          'language': 'en-US',
+          'page': page,
         },
       );
 
@@ -62,7 +62,7 @@ class MoviedbDatasource extends MoviesDataSource {
       final response = await _dio.get(
         '/movie/top_rated',
         queryParameters: {
-          'language': 'en-US',
+          'page': page,
         },
       );
 
@@ -78,7 +78,7 @@ class MoviedbDatasource extends MoviesDataSource {
       final response = await _dio.get(
         '/movie/upcoming',
         queryParameters: {
-          'language': 'en-US',
+          'page': page,
         },
       );
 
@@ -104,6 +104,25 @@ class MoviedbDatasource extends MoviesDataSource {
       return MovieMapper.movieFromMovieDetails(movieDetails);
     } catch (error) {
       throw Exception('Error getting movie by id');
+    }
+  }
+
+  @override
+  Future<List<Movie>> searchMovies(String query, {int page = 1}) async {
+    try {
+      if (query.isEmpty) return [];
+
+      final response = await _dio.get(
+        '/search/movie',
+        queryParameters: {
+          'query': query,
+          'page': page,
+        },
+      );
+
+      return _jsonToMovie(response.data);
+    } catch (error) {
+      return [];
     }
   }
 }
