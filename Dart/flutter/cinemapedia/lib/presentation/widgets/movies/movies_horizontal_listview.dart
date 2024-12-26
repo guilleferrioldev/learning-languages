@@ -119,13 +119,27 @@ class _Slide extends StatelessWidget {
             width: 150,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                // TODO: Add image loading
-                child: Center(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        context.push('/movie/${movie.id}');
-                      },
-                      child: const Text("Tap to see more")),
+                child: Image.network(
+                  movie.posterPath,
+                  width: 150,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress != null) {
+                      return const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      );
+                    }
+
+                    return GestureDetector(
+                      onTap: () => context.push('/movie/${movie.id}'),
+                      child: FadeIn(child: child),
+                    );
+                  },
                 )),
           ),
 
@@ -161,17 +175,4 @@ class _Slide extends StatelessWidget {
   }
 }
 
-// Image.network(movie.posterPath, width: 150, fit: BoxFit.cover,
-//                       loadingBuilder: (context, child, loadingProgress) {
-//                 if (loadingProgress != null) {
-//                   return const Padding(
-//                     padding: EdgeInsets.all(8.0),
-//                     child: Center(
-//                       child: CircularProgressIndicator(
-//                         strokeWidth: 2,
-//                       ),
-//                     ),
-//                   );
-//                 }
-
-//                 return FadeIn(child: child);
+//  context.push('/movie/${movie.id}');
